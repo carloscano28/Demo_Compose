@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -28,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,9 +64,17 @@ class MainActivity : ComponentActivity() {
 
 
                     //MessageCard(Message("Android", "Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose "))
+                    Row() {
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "Button 1 ")
+                        }
+                        Spacer(modifier = Modifier.padding(16.dp))
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "Button 1 ")
+                        }
+                    }
                     Column() {
                         Greeting("DemoJPCompose")
-                        //DemoColumnas()
                         RecipeColumnList(recipeList = recipeList)
                         Conversation(SampleData.conversationSample)
                     }
@@ -143,27 +153,6 @@ fun RecipeColumnList(recipeList: List<Recipe>) {
                 Log.d("Recipe", "RecipeColumnList: ${it.title}")
             })
         }
-    }
-}
-
-@Composable
-private fun DemoColumnas(){
-
-    Column(modifier= Modifier.padding(32.dp), horizontalAlignment  = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Text("Texto Uno", style = MaterialTheme.typography.h6 )
-        Spacer(modifier = Modifier.padding(4.dp))
-        Text("Texto Dos", style = MaterialTheme.typography.body1)
-        Spacer(modifier = Modifier.padding(4.dp))
-        Text("Texto Tres", style = MaterialTheme.typography.body2)
-        Spacer(modifier = Modifier.padding(4.dp))
-        Text("Texto Cuatro", style = MaterialTheme.typography.subtitle1)
-        Spacer(modifier = Modifier.padding(4.dp))
-        MessageCard(
-            msg = Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!")
-        )
-        MessageCard(
-            msg = Message("Colleague", "\nHey, take a look at Jetpack Compose, it's great!")
-        )
     }
 }
 
