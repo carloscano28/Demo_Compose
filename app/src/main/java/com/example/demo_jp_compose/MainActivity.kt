@@ -54,7 +54,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            var textoComp by remember {
+                mutableStateOf("Valor por defecto")
+            }
             Demo_JP_ComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -63,20 +65,10 @@ class MainActivity : ComponentActivity() {
                         .padding(16.dp),
                     color = MaterialTheme.colors.background
                 ) {
-
-
-                    //MessageCard(Message("Android", "Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose "))
-                    Row() {
-                        Button(onClick = { /*TODO*/ }) {
-                            Text(text = "Button 1 ")
-                        }
-                        Spacer(modifier = Modifier.padding(16.dp))
-                        Button(onClick = { /*TODO*/ }) {
-                            Text(text = "Button 1 ")
-                        }
-                    }
                     Column() {
-                        Greeting("DemoJPCompose")
+                        Greeting("DemoJPCompose", texto = textoComp){
+                            textoComp= it
+                        }
                         RecipeColumnList(recipeList = recipeList)
                         Conversation(SampleData.conversationSample)
                     }
@@ -86,41 +78,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(
-    name = "Light Mode",
-    //backgroundColor = 0xFF00FF00,
-    //widthDp = 50,
-    //heightDp = 50
-)
-@Preview(
-    name = "Dark Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    //backgroundColor = 0xFF00FF00,
-    //widthDp = 50,
-    //heightDp = 50
-)
-@Composable
-fun DefaultPreview() {
-    Demo_JP_ComposeTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            color = MaterialTheme.colors.background
-        ) {
-            RecipeColumnList(recipeList = recipeList)
-            RecipeCard(recipeList[0], onRecipeClick = {})
-
-            //MessageCard(Message("Android", "Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose Jetpack Compose "))
-            /*Column() {
-                Greeting("DemoJPCompose")
-                //DemoColumnas()
-                Conversation(SampleData.conversationSample)
-            }*/
-        }
-    }
-}
 
 @Composable
 fun RecipeCard(reciped: Recipe, onRecipeClick : (Recipe)-> Unit) {
@@ -159,18 +116,40 @@ fun RecipeColumnList(recipeList: List<Recipe>) {
 }
 
 @Composable
-fun Greeting(name: String) {
+fun Greeting(name: String, texto : String,  onTextChanged: (String)-> Unit) {
     val context = LocalContext.current
-    Spacer(modifier = Modifier.padding(64.dp))
+    var texto2 by remember {
+        mutableStateOf(name)
+    }
+    Spacer(modifier = Modifier.padding(4.dp))
     Text(
         modifier = Modifier.clickable{
             Toast.makeText(context,"texto clicleable", Toast.LENGTH_LONG ).show()
         },
-        text = "Hello $name!"
+        text = "$name!"
+    )
+    Spacer(modifier = Modifier.padding(4.dp))
+    Text(
+        modifier = Modifier.clickable{
+            onTextChanged.invoke("Estado hosteado fuera del composable!")
+        },
+        text = texto
     )
     Spacer(modifier = Modifier.padding(4.dp))
     Box(Modifier.background(Color.LightGray)) {
-        Text("Texto Box")
+        Text(modifier = Modifier.clickable{
+            texto2 = "Texto hosteado dentro del composable!"
+        }, text = texto2)
+    }
+
+    Row() {
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Button 1 ")
+        }
+        Spacer(modifier = Modifier.padding(16.dp))
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Button 1 ")
+        }
     }
 }
 
@@ -244,4 +223,40 @@ fun Conversation(messages: List<Message>) {
     }
 }
 
-
+@Preview(
+    name = "Light Mode",
+    //backgroundColor = 0xFF00FF00,
+    //widthDp = 50,
+    //heightDp = 50
+)
+@Preview(
+    name = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    //backgroundColor = 0xFF00FF00,
+    //widthDp = 50,
+    //heightDp = 50
+)
+@Composable
+fun DefaultPreview() {
+    Demo_JP_ComposeTheme {
+        var textoComp by remember {
+            mutableStateOf("Valor por defecto")
+        }
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            color = MaterialTheme.colors.background
+        ) {
+            Column() {
+                Greeting("DemoJPCompose", texto = textoComp){
+                    textoComp= it
+                }
+                RecipeColumnList(recipeList = recipeList)
+                Conversation(SampleData.conversationSample)
+            }
+        }
+    }
+}
