@@ -3,6 +3,7 @@ package com.example.demo_jp_compose
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.HorizontalAlignmentLine
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -158,9 +160,14 @@ fun RecipeColumnList(recipeList: List<Recipe>) {
 
 @Composable
 fun Greeting(name: String) {
-
+    val context = LocalContext.current
     Spacer(modifier = Modifier.padding(64.dp))
-    Text(text = "Hello $name!")
+    Text(
+        modifier = Modifier.clickable{
+            Toast.makeText(context,"texto clicleable", Toast.LENGTH_LONG ).show()
+        },
+        text = "Hello $name!"
+    )
     Spacer(modifier = Modifier.padding(4.dp))
     Box(Modifier.background(Color.LightGray)) {
         Text("Texto Box")
