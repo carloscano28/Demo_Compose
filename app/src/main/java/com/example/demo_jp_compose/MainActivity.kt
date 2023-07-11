@@ -43,6 +43,12 @@ import com.example.demo_jp_compose.models.Recipe
 import com.example.demo_jp_compose.models.SampleData
 import com.example.demo_jp_compose.ui.theme.Demo_JP_ComposeTheme
 
+/**
+ * Componentes Basicos JP Compose
+ *
+ *
+ **/
+
 val recipeList = listOf(
     Recipe(R.mipmap.ic_ajolotl_foreground, "Receta Uno", listOf("Ingrediente uno", "Ingrediente dos","Ingrediente tres","Ingrediente cuatro")),
     Recipe(R.mipmap.ic_desert_foreground, "Receta Dos", listOf("Ingrediente uno", "Ingrediente dos","Ingrediente tres","Ingrediente cuatro")),
