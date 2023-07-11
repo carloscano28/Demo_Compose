@@ -3,6 +3,7 @@ package com.example.demo_jp_compose
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,14 +21,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -49,6 +53,14 @@ val recipeList = listOf(
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        /****
+         * Ciertas apps necesitan mantener la pantalla encendida, como las apps de juegos o de cine. La mejor manera de hacerlo es usar FLAG_KEEP_SCREEN_ON en tu actividad (y únicamente en una actividad; nunca en un servicio ni en otro componente de la app). Por ejemplo:
+         */
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+
         setContent {
             var textoComp by remember {
                 mutableStateOf("Valor por defecto")
@@ -145,6 +157,7 @@ fun Greeting(name: String, texto : String,  onTextChanged: (String)-> Unit) {
         Spacer(modifier = Modifier.padding(16.dp))
         Button(onClick = { /*TODO*/ }) {
             Text(text = "Button 1 ")
+            //Icon(image)
         }
     }
 }
@@ -228,7 +241,7 @@ fun Conversation(messages: List<Message>) {
 @Preview(
     name = "Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
+    //showBackground = true,
     //backgroundColor = 0xFF00FF00,
     //widthDp = 50,
     //heightDp = 50
